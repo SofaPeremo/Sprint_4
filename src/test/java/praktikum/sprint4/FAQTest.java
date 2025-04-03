@@ -59,4 +59,5 @@ public class FAQTest {
     public void tearDown() {
             webDriver.quit();
     }
+
 }

@@ -104,5 +104,4 @@ public class OrderPageTwo {
     public boolean getModalSuccessfulOrder() {
         return webDriver.findElement(successfulOrderModal).isDisplayed();
     }
-
 }

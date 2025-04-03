@@ -78,5 +78,4 @@ public class MainPage {
                 .click();
         return this;
     }
-
 }

@@ -76,5 +76,4 @@ public class OrderPageOne {
         webDriver.findElement(nextButton).click();
         return this;
     }
-
 }
