@@ -57,7 +57,7 @@ public class FAQTest {
 
     @After
     public void tearDown() {
-            webDriver.quit();
+        webDriver.quit();
     }
 
 }

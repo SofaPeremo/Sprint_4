@@ -5,9 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
-import java.time.Instant;
 
 public class MainPage {
 
@@ -21,7 +19,7 @@ public class MainPage {
 
 
     //адрес страницы
-    private static final String url = "https://qa-scooter.praktikum-services.ru/";
+    private static final String URL = "https://qa-scooter.praktikum-services.ru/";
     //кнопка про куки
     private final By cookiesButton = By.className("App_CookieButton__3cvqF");
     //верхняя кнопка "Заказать"
@@ -33,7 +31,7 @@ public class MainPage {
 
     //открытие страницы
     public MainPage openOrderPage() {
-        webDriver.get(url);
+        webDriver.get(URL);
         return this;
     }
 
@@ -43,15 +41,15 @@ public class MainPage {
         return this;
     }
 
-    //клик по верхней кнопке "Заказать"
-    public MainPage clickOrderButtonUp() {
-        webDriver.findElement(orderButtonUp).click();
-        return this;
-    }
-
-    //клик по нижней кнопке "Заказать"
-    public MainPage clickOrderButtonDown() {
-        webDriver.findElement(orderButtonDown).click();
+    //метод определения верхней или нижней кнопки Заказать
+    public MainPage clickOrderButton(String buttonType) {
+        if (buttonType.equals("up")) {
+            // Локатор для верхней кнопки
+            webDriver.findElement(orderButtonUp).click();
+        } else {
+            // Локатор для нижней кнопки
+            webDriver.findElement(orderButtonDown).click();
+        }
         return this;
     }
 

@@ -3,13 +3,15 @@ package praktikum.sprint4;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import static org.junit.Assert.assertTrue;
 
-
-public class OrderTest{
+@RunWith(Parameterized.class)
+public class OrderTest {
 
     private WebDriver webDriver;
 
@@ -19,75 +21,76 @@ public class OrderTest{
         //webDriver = new FirefoxDriver();
     }
 
-    @Test
-    public void orderButtonUp() {
+    private final String buttonType;
+    private final String name;
+    private final String surname;
+    private final String address;
+    private final String metroStation;
+    private final String phone;
+    private final String deliveryDate;
+    private final String scooterColor;
+    private final String comment;
 
-        new MainPage(webDriver)
-                .openOrderPage()
-                .clickCookiesButton()
-                .clickOrderButtonUp();
+    public OrderTest(String buttonType,
+                     String name,
+                     String surname,
+                     String address,
+                     String metroStation,
+                     String phone,
+                     String deliveryDate,
+                     String scooterColor,
+                     String comment) {
+        this.buttonType = buttonType;
+        this.name = name;
+        this.surname = surname;
+        this.address = address;
+        this.metroStation = metroStation;
+        this.phone = phone;
+        this.deliveryDate = deliveryDate;
+        this.scooterColor = scooterColor;
+        this.comment = comment;
+    }
 
-        new OrderPageOne(webDriver)
-                .printUserName("Иван")
-                .printUserSurname("Иванов")
-                .printUserAddress("Москва")
-                .clickMetro()
-                .clickMetroStationOne()
-                .printPhoneNumber("89000000000")
-                .clickNextButton();
-
-        new OrderPageTwo(webDriver)
-                .clickDeliveryDateInput()
-                .clickDatepickerChooseDropdownForTestOne()
-                .clickRentalPeriodInput()
-                .clickAmountOfDaysDropdown()
-                .clickScooterColorBlack()
-                .printComment("Комментарий для курьера")
-                .clickOrderButtonDown()
-                .clickConfirmTheOrderButton();
-
-
-        boolean isModalDisplayed = new OrderPageTwo(webDriver).getModalSuccessfulOrder();
-        assertTrue("Модальное окно успешного заказа не отобразилось", isModalDisplayed);
-
+    @Parameterized.Parameters
+    public static Object[][] data() {
+        return new Object[][]{
+                {"up", "Иван", "Иванов", "Москва", "stationOne", "89000000000", "date1", "black", "Комментарий для курьера"},
+                {"down", "Анна", "Ромашкина", "Санкт-Петербург", "stationTwo", "89111111111", "date2", "grey", "Комментарий для курьера"}
+        };
     }
 
     @Test
-    public void orderButtonDown() {
-
+    public void testOrderCreation() {
         new MainPage(webDriver)
                 .openOrderPage()
                 .clickCookiesButton()
-                .clickOrderButtonDown();
+                .clickOrderButton(buttonType.equals("up") ? "up" : "down");
 
         new OrderPageOne(webDriver)
-                .printUserName("Анна")
-                .printUserSurname("Ромашкина")
-                .printUserAddress("Санкт-Петербург")
+                .printUserName(name)
+                .printUserSurname(surname)
+                .printUserAddress(address)
                 .clickMetro()
-                .clickMetroStationTwo()
-                .printPhoneNumber("89111111111")
+                .clickMetroStation(metroStation)
+                .printPhoneNumber(phone)
                 .clickNextButton();
 
         new OrderPageTwo(webDriver)
                 .clickDeliveryDateInput()
-                .clickDatepickerChooseDropdownForTestTwo()
+                .chooseDeliveryDate(deliveryDate)
                 .clickRentalPeriodInput()
                 .clickAmountOfDaysDropdown()
-                .clickScooterColorGrey()
-                .printComment("Комментарий для курьера")
+                .clickScooterColor(scooterColor)
+                .printComment(comment)
                 .clickOrderButtonDown()
                 .clickConfirmTheOrderButton();
 
-
         boolean isModalDisplayed = new OrderPageTwo(webDriver).getModalSuccessfulOrder();
         assertTrue("Модальное окно успешного заказа не отобразилось", isModalDisplayed);
-
     }
 
     @After
-    public void teardown() {
+    public void tearDown() {
         webDriver.quit();
     }
-
 }

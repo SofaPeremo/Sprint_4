@@ -53,15 +53,19 @@ public class OrderPageOne {
         return this;
     }
 
-    //выбрать станцию метро из списка для первого теста
-    public OrderPageOne clickMetroStationOne() {
-        webDriver.findElement(metroStationForTestOneDropdown).click();
-        return this;
-    }
+    public OrderPageOne clickMetroStation(String stationType) {
+        By stationLocator;
+        //выбираем локатор в зависимости от типа станции
+        if ("stationOne".equals(stationType)) {
+            stationLocator = metroStationForTestOneDropdown;
+        } else if ("stationTwo".equals(stationType)) {
+            stationLocator = metroStationForTestTwoDropdown;
+        } else {
+            throw new IllegalArgumentException("Unknown station type: " + stationType);
+        }
 
-    //выбрать станцию метро из списка для второго теста
-    public OrderPageOne clickMetroStationTwo() {
-        webDriver.findElement(metroStationForTestTwoDropdown).click();
+        //кликаем по выбранной станции
+        webDriver.findElement(stationLocator).click();
         return this;
     }
 

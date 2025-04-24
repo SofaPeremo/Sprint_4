@@ -1,9 +1,6 @@
 package praktikum.sprint4;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 
 
@@ -46,15 +43,13 @@ public class OrderPageTwo {
         return this;
     }
 
-    //выбрать дату в календаре для первого теста
-    public OrderPageTwo clickDatepickerChooseDropdownForTestOne() {
-        webDriver.findElement(datepickerChooseDropdownForTestOne).click();
-        return this;
-    }
-
-    //выбрать дату в календаре для первого теста
-    public OrderPageTwo clickDatepickerChooseDropdownForTestTwo() {
-        webDriver.findElement(datepickerChooseDropdownForTestTwo).click();
+    public OrderPageTwo chooseDeliveryDate(String dateOption) {
+        // 2. Выбор конкретной даты в зависимости от параметра
+        if (dateOption.equals("date1")) {
+            webDriver.findElement(datepickerChooseDropdownForTestOne).click();
+        } else if (dateOption.equals("date2")) {
+            webDriver.findElement(datepickerChooseDropdownForTestTwo).click();
+        }
         return this;
     }
 
@@ -70,15 +65,18 @@ public class OrderPageTwo {
         return this;
     }
 
-    //выбрать цвет черный
-    public OrderPageTwo clickScooterColorBlack() {
-        webDriver.findElement(scooterColorBlackCheckbox).click();
-        return this;
-    }
-
-    //выбрать цвет серый
-    public OrderPageTwo clickScooterColorGrey() {
-        webDriver.findElement(scooterColorGreyCheckbox).click();
+    //выбор цвета самоката
+    public OrderPageTwo clickScooterColor(String color) {
+        switch (color.toLowerCase()) {
+            case "black":
+                webDriver.findElement(scooterColorBlackCheckbox).click();
+                break;
+            case "grey":
+                webDriver.findElement(scooterColorGreyCheckbox).click();
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown scooter color: " + color);
+        }
         return this;
     }
 
